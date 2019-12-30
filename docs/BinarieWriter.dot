@@ -1,0 +1,15 @@
+digraph BinarieWriterInterface {
+  DataWriter; ByteWriter; WriteControl;
+    Flushable -> WriteControl;
+    Closeable -> WriteControl;
+  BaseDataWriter [label="BaseDataWriter(ByteOrder)", color=red];
+    ByteOrdered -> BaseDataWriter;
+    DataWriter -> BaseDataWriter;
+  Writer [label="Writer(OutputStream): Base(Big)", shape=record];
+  BaseDataWriter -> Writer;
+
+  DataWriter -> Writer;
+  ByteWriter -> Writer;
+  WriteControl -> Writer;
+  OutputStream -> Writer [style=dashed, color=blue];
+}

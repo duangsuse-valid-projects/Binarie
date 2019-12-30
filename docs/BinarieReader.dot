@@ -1,0 +1,35 @@
+digraph BinarieReader {
+  MarkReset;
+  BufferStack [label="BufferStack()", color=red];
+    MarkReset -> BufferStack;
+  MarkResetInputStream [shape=record];
+    BufferStack -> MarkResetInputStream;
+    InputStream -> MarkResetInputStream [style=dashed, color=blue];
+  ByteReader;
+  
+  ReadControl;
+    Closeable -> ReadControl;
+    MarkReset -> ReadControl;
+  DataReader;
+  ByteOrder [color=orange];
+  ByteOrdered;
+    ByteOrder -> ByteOrdered [style=dashed];
+  BaseDataReader [label="BaseDataReader(ByteOrder)", color=red];
+  DataReader -> BaseDataReader;
+  ByteOrdered -> BaseDataReader;
+  ByteOrder -> BaseDataReader [style=dashed, color=blue];
+  Reader [label="Reader(InputStream): BaseDataReader(Little)", shape=record];
+  FileReader [label="FileReader(File)", shape=record];
+  InputStream;
+    BaseDataReader -> Reader;
+    ByteReader -> Reader;
+    DataReader -> Reader;
+    ReadControl -> Reader;
+    ByteReader -> BaseDataReader;
+    MarkResetInputStream -> Reader [style=dotted, color=blue];
+  InputStream -> Reader [style=dashed, color=blue];
+  Reader -> FileReader;
+  InputStream -> FileReader [style=dashed, color=blue];
+}
+
+ 
